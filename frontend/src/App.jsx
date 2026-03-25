@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = import.meta.env.VITE_API_BASE_URL;
 
 const serviceCards = [
   { label: "🏗️ Architecture", value: "Microservices" },
