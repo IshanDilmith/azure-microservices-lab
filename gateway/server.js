@@ -5,7 +5,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({
-  origin: "https://ambitious-river-0e94dcc00.6.azurestaticapps.net",
+  origin: "https://polite-sky-031eceb00.1.azurestaticapps.net",
   methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type"]
 }));
