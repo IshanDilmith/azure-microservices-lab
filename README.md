@@ -1,12 +1,14 @@
 # Azure Microservices Lab
 
-Simple lab project that pairs a static frontend with a small Node.js gateway API. The frontend is a single-page portal that calls the gateway for health checks and sample data.
+Cloud-native lab project with a Vite React frontend and a small Node.js gateway API. The frontend portal can check gateway health and retrieve sample items from the backend.
 
 ## Overview
 
-- Frontend: static HTML app in [frontend/index.html](frontend/index.html)
+- Frontend: React app in [frontend/src/App.jsx](frontend/src/App.jsx)
+- Frontend entry: [frontend/index.html](frontend/index.html)
+- Frontend config: [frontend/vite.config.js](frontend/vite.config.js)
 - Gateway: Express API in [gateway/server.js](gateway/server.js)
-- Package manifest: [gateway/package.json](gateway/package.json)
+- Package manifests: [frontend/package.json](frontend/package.json) and [gateway/package.json](gateway/package.json)
 
 The gateway exposes two API endpoints used by the portal:
 
@@ -18,11 +20,17 @@ The gateway exposes two API endpoints used by the portal:
 ```text
 azure-microservices-lab/
 ├── frontend/
-│   └── index.html
+│   ├── index.html
+│   ├── package.json
+│   ├── vite.config.js
+│   └── src/
+│       ├── App.jsx
+│       ├── main.jsx
+│       └── styles.css
 └── gateway/
-	├── Dockerfile
-	├── package.json
-	└── server.js
+    ├── Dockerfile
+    ├── package.json
+    └── server.js
 ```
 
 ## Prerequisites
@@ -47,6 +55,29 @@ npm start
 
 By default, the gateway listens on port `3000` unless `PORT` is set.
 
+## Run the React Frontend
+
+1. Open a second terminal in the `frontend` folder.
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Create a local `.env` file in `frontend/` from [frontend/.env.example](frontend/.env.example) and set the API URL if needed:
+
+```bash
+REACT_APP_API_URL=http://localhost:3000
+```
+
+4. Start the dev server:
+
+```bash
+npm run dev
+```
+
+The app will usually run at `http://localhost:5173`.
+
 ## Test the Gateway
 
 With the service running, try these endpoints:
@@ -61,19 +92,15 @@ Example responses:
 - `/health` returns `{ "status": "ok" }`
 - `/api/items` returns a small JSON array of sample items
 
-## Frontend
+## Frontend Environment Variable
 
-The frontend is a standalone HTML file with embedded styles and scripts. It calls a fixed gateway URL configured in the page script:
+The React app reads `REACT_APP_API_URL` from the frontend environment and uses it at build time.
 
-```text
-https://gateway.yellowmeadow-18860117.southeastasia.azurecontainerapps.io
-```
-
-If you want to point the portal at a different gateway, update the `API_URL` constant in [frontend/index.html](frontend/index.html).
+Create [frontend/.env](frontend/.env) locally from [frontend/.env.example](frontend/.env.example).
 
 ## CORS Notes
 
-The gateway currently allows requests from a specific Azure Static Web Apps origin. If you run the frontend from another origin during development, update the CORS configuration in [gateway/server.js](gateway/server.js) to include your local or deployed frontend URL.
+The gateway allows both the local Vite dev server and the deployed Static Web Apps origin by default. If you deploy the frontend elsewhere, update `FRONTEND_ORIGIN` in [gateway/.env.example](gateway/.env.example) or your real gateway `.env` file.
 
 ## Docker
 
@@ -81,10 +108,6 @@ The `gateway` folder includes a [Dockerfile](gateway/Dockerfile) for containeriz
 
 ## Deployment Notes
 
-- The frontend is designed to run as static hosting.
+- The frontend is now a React app built with Vite.
 - The gateway is an Express service that can run locally, in Docker, or on Azure Container Apps.
 - Make sure the frontend API URL and gateway CORS allowlist match the deployment environment.
-
-## License
-
-No license file is currently included in the repository.

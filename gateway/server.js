@@ -1,11 +1,21 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const defaultOrigins = [
+  "http://localhost:5173",
+  "https://polite-sky-031eceb00.1.azurestaticapps.net"
+];
+const allowedOrigins = (process.env.FRONTEND_ORIGIN || defaultOrigins.join(","))
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 
 app.use(cors({
-  origin: "https://polite-sky-031eceb00.1.azurestaticapps.net",
+  origin: allowedOrigins,
   methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type"]
 }));
