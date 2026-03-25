@@ -640,7 +640,7 @@
   </div>
 
   <script>
-    const API_URL = "https://gateway.gentlehill-571d6cde.southeastasia.azurecontainerapps.io";
+    const API_URL = process.env.REACT_APP_API_URL;
     let requestCount = 0;
 
     function updateRequestCount() {
