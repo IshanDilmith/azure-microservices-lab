@@ -1,6 +1,7 @@
 import { useState } from "react";
 
-const API_URL = import.meta.env.VITE_API_BASE_URL;
+const DEFAULT_API_URL = "https://gateway.yellowmeadow-18860117.southeastasia.azurecontainerapps.io";
+const API_URL = import.meta.env.VITE_API_BASE_URL || DEFAULT_API_URL;
 
 const serviceCards = [
   { label: "🏗️ Architecture", value: "Microservices" },

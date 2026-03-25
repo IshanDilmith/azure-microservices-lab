@@ -67,7 +67,7 @@ npm install
 3. Create a local `.env` file in `frontend/` from [frontend/.env.example](frontend/.env.example) and set the API URL if needed:
 
 ```bash
-REACT_APP_API_URL=http://localhost:3000
+VITE_API_BASE_URL=http://localhost:3000
 ```
 
 4. Start the dev server:
@@ -94,7 +94,7 @@ Example responses:
 
 ## Frontend Environment Variable
 
-The React app reads `REACT_APP_API_URL` from the frontend environment and uses it at build time.
+The React app reads `VITE_API_BASE_URL` from the frontend environment and falls back to the deployed gateway URL if it is not set.
 
 Create [frontend/.env](frontend/.env) locally from [frontend/.env.example](frontend/.env.example).
 
